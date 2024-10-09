@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load i18n %}
 <html lang="uz">
 <head>
     <meta charset="utf-8">
@@ -111,7 +112,7 @@
 
                     <h6>Exchange of ideas</h6>
 
-                    <h1 class="text-white mb-4">Online platform for requests and offers</h1>
+                    <h1 class="text-white mb-4">{% trans 'Online platform for requests and offers' %}</h1>
 
                     <a href="main/forms/offer/offer-form.html" class="btn custom-btn smoothscroll me-3">Problems</a>
 
@@ -143,18 +144,19 @@
 
                 <div class="col-lg-6 col-12">
                     <div class="book-section-info">
-                        <h6>Brief information about the site</h6>
+                        <h6></h6>
 
 
                         <h2 class="mb-4">Najot Ta'lim Feedback</h2>
 
-                        <p>The Najot Ta'lim Feedback Site is designed to collect and analyze feedback on services,
+                        <p>{% blocktrans %}The Najot Ta'lim Feedback Site is designed to collect and analyze feedback on services,
                             classes, and overall experiences at the Najot Ta'lim educational center. The site allows
                             students and their parents to identify strengths and areas for improvement at the center.
                             Feedback is gathered through an online form, enhancing transparency and openness. The
                             collected feedback is used to improve services and introduce new opportunities. The site
                             also showcases the center’s achievements and successes, providing inspiration and
-                            strengthening its image.</p>
+                            strengthening its image.
+                        {% endblocktrans %}</p>
                     </div>
                 </div>
 

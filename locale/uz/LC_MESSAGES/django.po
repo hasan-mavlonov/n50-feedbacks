@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-10-09 06:25+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\feedbacks\models.py:7
+msgid "Full name"
+msgstr "To'liq ism"
+
+#: .\feedbacks\models.py:8
+msgid "Username"
+msgstr "Foydalanuvchi ism"
+
+#: .\feedbacks\models.py:9
+msgid "Email"
+msgstr "Email"
+
+#: .\feedbacks\models.py:10
+msgid "Password"
+msgstr "Ximoya kodi"
+
+#: .\feedbacks\models.py:16
+msgid "Student"
+msgstr "Student"
+
+#: .\feedbacks\models.py:29 .\feedbacks\models.py:30
+msgid "Feedback"
+msgstr "Izoh"
+
+#: .\templates\index.html:115
+msgid "Online platform for requests and offers"
+msgstr ""
+
+#: .\templates\index.html:152
+msgid ""
+"The Najot Ta'lim Feedback Site is designed to collect and analyze feedback "
+"on services,\n"
+"                            classes, and overall experiences at the Najot "
+"Ta'lim educational center. The site allows\n"
+"                            students and their parents to identify strengths "
+"and areas for improvement at the center.\n"
+"                            Feedback is gathered through an online form, "
+"enhancing transparency and openness. The\n"
+"                            collected feedback is used to improve services "
+"and introduce new opportunities. The site\n"
+"                            also showcases the center’s achievements and "
+"successes, providing inspiration and\n"
+"                            strengthening its image.\n"
+"                        "
+msgstr ""
