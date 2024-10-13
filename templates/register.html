@@ -47,10 +47,9 @@
             <div class="register-form">
                 <div class="col-lg-12 col-12 mx-auto">
                     <form class="custom-form" action="{% url 'register' %}" method="POST" role="form">
-    {% csrf_token %}
+                        {% csrf_token %}
     <div class="text-center mb-5">
-        <p class="mb-1" style="text-align: end">Welcome to <h6 style="text-align: end"><b>Najot
-        Ta'lim Feedback</b></h6></p>
+        <p class="mb-1" style="text-align: end">Welcome to <h6 style="text-align: end"><b>Najot Ta'lim Feedback</b></h6></p>
     </div>
     <div>
         <p style="text-align: start"><b>Register</b></p>
@@ -65,27 +64,29 @@
 
         <div class="input-group mb-3">
             <input type="text" name="full_name" id="full_name" class="form-control register-form-input" placeholder="Full Name" required>
-
         </div>
+        
 
         <div class="input-group mb-3">
             <input type="text" name="username" id="username" class="form-control register-form-input" placeholder="Username" required>
-
         </div>
 
         <div class="input-group mb-3">
             <input type="email" name="email" id="email" class="form-control register-form-input" placeholder="Email" required>
-
         </div>
 
         <div class="input-group mb-3">
             <input type="password" name="password1" id="password" class="form-control register-form-input" placeholder="Password" required>
-
+            {% if form.password1.errors %}
+                <div class="text-danger">{{ form.password1.errors }}</div>
+            {% endif %}
         </div>
 
         <div class="input-group mb-3">
             <input type="password" name="password2" id="confirm_password" class="form-control register-form-input" placeholder="Confirm Password" required>
-
+            {% if form.password2.errors %}
+                <div class="text-danger">{{ form.password2.errors }}</div>
+            {% endif %}
         </div>
 
         <div class="col-lg-8 col-md-10 col-8 mx-auto mb-2">
@@ -97,7 +98,6 @@
         </div>
     </div>
 </form>
-
 
                 </div>
             </div>

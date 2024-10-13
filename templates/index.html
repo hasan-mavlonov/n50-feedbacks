@@ -42,12 +42,18 @@
             </a>
 
             <div class="d-lg-none ms-auto me-3">
-                <a href="{% url 'login' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                    <i class="btn-icon bi-person"></i>
-                    <span>Log in</span>
-                </a>
-            </div>
-
+    {% if request.session.user_id %}
+        <a href="{% url 'profile' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+            <i class="btn-icon bi-person-circle"></i> <!-- Replace with your profile icon -->
+            <span>Profile</span>
+        </a>
+    {% else %}
+        <a href="{% url 'login' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+            <i class="btn-icon bi-person"></i>
+            <span>Log in</span>
+        </a>
+    {% endif %}
+</div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -61,11 +67,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'problems' %}">Problems</a>
+                        <a class="nav-link" href="{% url 'problems' %}">Problems & offers</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'offers' %}">Offers</a>
+                        <a class="nav-link" href="{% url 'offers' %}">Make an offer</a>
                     </li>
 
                     <li class="nav-item">
@@ -92,14 +98,25 @@
                     </li>
 
                 </ul>
-
                 <div class="d-none d-lg-block">
-                    <a href="{% url 'login' %}"
-                       class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                        <i class="btn-icon bi-person"></i>
-                        <span>Log in</span>
-                    </a>
-                </div>
+    {% if request.session.user_id %}
+        <!-- Show the Profile button and Logout button if the user is logged in -->
+        <a href="{% url 'profile' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+            <i class="btn-icon bi-person-circle"></i>  <!-- Change to a profile icon -->
+            <span>Profile</span>
+        </a>
+        <a href="{% url 'logout' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted" style="margin-left: 10px;">
+            <i class="btn-icon bi-box-arrow-right"></i>  <!-- Logout icon -->
+            <span>Logout</span>
+        </a>
+    {% else %}
+        <!-- Default to showing the Log in button -->
+        <a href="{% url 'login' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted">
+            <i class="btn-icon bi-person"></i>
+            <span>Log in</span>
+        </a>
+    {% endif %}
+</div>
             </div>
         </div>
     </nav>
@@ -114,7 +131,7 @@
 
                     <h1 class="text-white mb-4">{% trans 'Online platform for requests and offers' %}</h1>
 
-                    <a href="{% url 'problems' %}" class="btn custom-btn smoothscroll me-3">Problems</a>
+                    <a href="{% url 'problems' %}" class="btn custom-btn smoothscroll me-3">Problems & offers</a>
 
                     <a href="{% url 'offers' %}" class="link link--kale smoothscroll">Make an offer</a>
                 </div>

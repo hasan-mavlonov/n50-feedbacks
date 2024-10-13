@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,24 +12,24 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet">
 
-    <link href="../../css/bootstrap/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/bootstrap-icons.css' %}" rel="stylesheet">
 
-    <link href="../../css/bootstrap/templatemo-ebook-landing.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap/templatemo-ebook-landing.css' %}" rel="stylesheet">
 
-    <link rel="icon" href="../../files/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{% static 'files/images/favicon.ico' %}" type="image/x-icon">
 
-    <link rel="stylesheet" href="../../css/carusel/carusel.css">
+    <link rel="stylesheet" href="{% static 'css/carusel/carusel.css' %}">
 
-    <link rel="stylesheet" href="../../css/profile/style.css">
+    <link rel="stylesheet" href="{% static 'css/profile/style.css' %}">
 </head>
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="../../index.html">
-            <i><img src="../../files/images/logo.png" alt="404" style="width: 60px;"></i>
+            <i><img src="{% static 'files/images/logo.png' %}" alt="404" style="width: 60px;"></i>
             <span>Najot Ta'lim</span>
         </a>
 
@@ -47,7 +48,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-auto me-lg-4">
                 <li class="nav-item">
-                    <a class="nav-link click-scroll" href="#section_1">Home</a>
+                    <a class="nav-link click-scroll" href="{% url 'home' %}">Home</a>
                 </li>
 
                 <li class="nav-item">
@@ -72,11 +73,10 @@
             </ul>
 
             <div class="d-none d-lg-block">
-                <a href="{% url 'login' %}"
-                   class="btn custom-btn custom-border-btn btn-naira btn-inverted">
-                    <i class="btn-icon bi-person"></i>
-                    <span>Log in</span>
-                </a>
+                <a href="{% url 'logout' %}" class="btn custom-btn custom-border-btn btn-naira btn-inverted" style="margin-left: 10px;">
+            <i class="btn-icon bi-box-arrow-right"></i>  <!-- Logout icon -->
+            <span>Logout</span>
+        </a>
             </div>
         </div>
     </div>
@@ -91,12 +91,18 @@
                 <div class="card-header">Profile Picture</div>
                 <div class="card-body text-center">
                     <!-- Profile picture image-->
-                    <img class="img-account-profile rounded-circle mb-2"
-                         src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                    {% if user.profile_picture %}
+                        <img class="img-account-profile rounded-circle mb-2"
+                             src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px;">
+                    {% else %}
+                        <img class="img-account-profile rounded-circle mb-2"
+                             src="http://bootdey.com/img/Content/avatar/avatar1.png" alt="Default Profile Picture" style="width: 150px; height: 150px;">
+                    {% endif %}
                     <!-- Profile picture help block-->
                     <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                     <!-- Profile picture upload button-->
-                    <button class="btn" type="button">Upload new image</button>
+                    <input class="form-control" id="profilePicture" type="file" name="profile_picture" style="display: none;">
+                    <button class="btn btn-primary" type="button" onclick="document.getElementById('profilePicture').click();">Upload new image</button>
                 </div>
             </div>
         </div>
@@ -105,66 +111,65 @@
             <div class="card mb-4">
                 <div class="card-header">Account Details</div>
                 <div class="card-body">
-                    <form>
-                        <!-- Form Group (username)-->
+                    <form method="POST" action="{% url 'profile' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Form Group (username) -->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other
-                                users on the site)</label>
-                            <input class="form-control" id="inputUsername" type="text" placeholder="Enter your username"
-                                   value="username">
+                            <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                            <input class="form-control" id="inputUsername" type="text" name="username" value="{{ user.username }}" readonly>
                         </div>
-                        <!-- Form Row-->
+
+                        <!-- Form Row -->
                         <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
+                            <!-- Form Group (first name) -->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputFirstName">First name</label>
-                                <input class="form-control" id="inputFirstName" type="text"
-                                       placeholder="Enter your first name" value="Valerie">
+                                <label class="small mb-1" for="inputFirstName">First Name</label>
+                                <input class="form-control" id="inputFirstName" type="text" name="first_name" placeholder="Enter your first name" value="{{ user.first_name|default:'' }}">
                             </div>
-                            <!-- Form Group (last name)-->
+                            <!-- Form Group (last name) -->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputLastName">Last name</label>
-                                <input class="form-control" id="inputLastName" type="text"
-                                       placeholder="Enter your last name" value="Luna">
+                                <label class="small mb-1" for="inputLastName">Last Name</label>
+                                <input class="form-control" id="inputLastName" type="text" name="last_name" placeholder="Enter your last name" value="{{ user.last_name|default:'' }}">
                             </div>
                         </div>
-                        <!-- Form Row        -->
+
+                        <!-- Form Row -->
                         <div class="row gx-3 mb-3">
-                            <!-- Form Group (organization name)-->
+                            <!-- Form Group (organization name) -->
                             <div class="col-md-6">
-                                <label class="small mb-1" for="inputOrgName">Organization name</label>
-                                <input class="form-control" id="inputOrgName" type="text"
-                                       placeholder="Enter your organization name" value="Start Bootstrap">
+                                <label class="small mb-1" for="inputOrgName">Organization Name</label>
+                                <input class="form-control" id="inputOrgName" type="text" name="organization_name" placeholder="Enter your organization name" value="{{ user.organization_name|default:'' }}">
                             </div>
-                            <!-- Form Group (location)-->
+                            <!-- Form Group (location) -->
                             <div class="col-md-6">
                                 <label class="small mb-1" for="inputLocation">Location</label>
-                                <input class="form-control" id="inputLocation" type="text"
-                                       placeholder="Enter your location" value="San Francisco, CA">
+                                <input class="form-control" id="inputLocation" type="text" name="location" placeholder="Enter your location" value="{{ user.location|default:'' }}">
                             </div>
                         </div>
-                        <!-- Form Group (email address)-->
+
+                        <!-- Form Group (email address) -->
                         <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
-                            <input class="form-control" id="inputEmailAddress" type="email"
-                                   placeholder="Enter your email address" value="name@example.com" readonly
-                                   style="cursor: not-allowed;">
+                            <label class="small mb-1" for="inputEmailAddress">Email Address</label>
+                            <input class="form-control" id="inputEmailAddress" type="email" name="email" value="{{ user.email }}" readonly style="cursor: not-allowed;">
                         </div>
-                        <!-- Linkedin profile link-->
+
+                        <!-- LinkedIn Profile Link -->
                         <div class="mb-3">
-                            <label class="small mb-1" for="linkedinProfileLink">Linkedin profile link</label>
-                            <input class="form-control" id="linkedinProfileLink" type="email"
-                                   placeholder="Enter your Linkedin profile link"
-                                   value="https://www.linkedin.com/in/valerie-luna-123456789">
+                            <label class="small mb-1" for="linkedinProfileLink">LinkedIn Profile Link</label>
+                            <input class="form-control" id="linkedinProfileLink" type="url" name="linkedin_profile" placeholder="Enter your LinkedIn profile link" value="{{ user.linkedin_profile|default:'' }}">
                         </div>
-                        <!-- Save changes button-->
-                        <button class="btn" type="button">Save changes</button>
+
+                        <!-- Save changes button -->
+                        <button class="btn btn-primary" type="submit">Save changes</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!--Script-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

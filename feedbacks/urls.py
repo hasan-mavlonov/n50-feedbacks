@@ -1,5 +1,9 @@
 from django.urls import path
-from feedbacks.views import homepage, problemspage, offerspage,commentspage, unknownpage, loginpage, register, successpage
+from feedbacks.views import (
+    homepage, problemspage, offerspage,
+    commentspage, unknownpage,
+    successpage, register, login, profile, logout_view
+)
 
 urlpatterns = [
     path('', homepage, name='home'),
@@ -7,9 +11,10 @@ urlpatterns = [
     path('offers/', offerspage, name='offers'),
     path('comments/', commentspage, name='comments'),
     path('unknown/', unknownpage, name='404'),
-    path('login/', loginpage, name='login'),
-    path('register/', register, name='register'),  # Use the actual register view here
+    path('register/', register, name='register'),  # Point to the register view
     path('success/', successpage, name='success'),
-
+    path('login/', login, name='login'),
+    path('profile/', profile, name='profile'),
+    path('logout/', logout_view, name='logout'),  # Logout URL
 ]
 

@@ -6,10 +6,16 @@ from .models import StudentModel
 class StudentRegistrationForm(forms.ModelForm):
     password1 = forms.CharField(widget=forms.PasswordInput, label="Password")
     password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
+    full_name = forms.CharField(disabled=True, required=False)  # Use disabled=True instead of readonly
 
     class Meta:
         model = StudentModel
-        fields = ['full_name', 'username', 'email']
+        fields = ['full_name', 'username', 'email', 'password1', 'password2']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance:
+            self.fields['full_name'].initial = self.instance.full_name
 
     # Validate that the two passwords match
     def clean_password2(self):
@@ -19,11 +25,25 @@ class StudentRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords don't match")
         return password2
 
-    # Override the save method to hash the password before saving
+    # Save the user with the hashed password
     def save(self, commit=True):
         student = super().save(commit=False)
-        # Hash the password before saving
-        student.password = make_password(self.cleaned_data["password1"])
+        student.password = make_password(self.cleaned_data['password1'])  # Hash the password
         if commit:
             student.save()
         return student
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = StudentModel
+        fields = ['username', 'first_name', 'last_name', 'organization_name', 'location', 'email', 'linkedin_profile', 'profile_picture']
+        widgets = {
+            'username': forms.TextInput(attrs={'placeholder': 'Enter your username'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Enter your first name'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Enter your last name'}),
+            'organization_name': forms.TextInput(attrs={'placeholder': 'Enter your organization name'}),
+            'location': forms.TextInput(attrs={'placeholder': 'Enter your location'}),
+            'email': forms.EmailInput(attrs={'readonly': 'readonly', 'style': 'cursor: not-allowed;', 'placeholder': 'Enter your email address'}),
+            'linkedin_profile': forms.URLInput(attrs={'placeholder': 'Enter your LinkedIn profile link'}),
+            'profile_picture': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+        }
