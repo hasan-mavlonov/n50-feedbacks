@@ -41,29 +41,35 @@
                 <button type="button" class="btn btn-secondary active" id="signUpBtn">Problems</button>
             </div>
             <a href="{% url 'home' %}" type="button" class="btn btn-secondary back-home">Home</a>
-            <form id="signUpForm">
+
+            <!-- Problem Submission Form -->
+            <form id="signUpForm" method="POST" action="{% url 'submit_problem' %}">
+                {% csrf_token %}
                 <h4 class="form-title">Submit a problem</h4>
                 <div class="form-group mt-4">
                     <label for="problemTitle">Title</label>
-                    <input type="text" class="form-control" id="problemTitle" placeholder="Enter problem title">
+                    <input type="text" class="form-control" name="title" id="problemTitle" placeholder="Enter problem title" required>
                 </div>
                 <div class="form-group">
                     <label for="problemDescription">Description</label>
-                    <textarea class="form-control" id="problemDescription"
-                              placeholder="Enter problem description" maxlength="2000"></textarea>
+                    <textarea class="form-control" name="description" id="problemDescription"
+                              placeholder="Enter problem description" maxlength="2000" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            <form id="signInForm" style="display: none;">
-                <h4 class="form-title">Submit a offer</h4>
+
+            <!-- Offer Submission Form -->
+            <form id="signInForm" method="POST" action="{% url 'submit_offer' %}" style="display: none;">
+                {% csrf_token %}
+                <h4 class="form-title">Submit an offer</h4>
                 <div class="form-group mt-4">
                     <label for="offerTitle">Title</label>
-                    <input type="text" class="form-control" id="offerTitle" placeholder="Enter offer title">
+                    <input type="text" class="form-control" name="title" id="offerTitle" placeholder="Enter offer title" required>
                 </div>
                 <div class="form-group">
                     <label for="offerDescription">Description</label>
-                    <textarea class="form-control" id="offerDescription"
-                              placeholder="Enter offer description" maxlength="2000"></textarea>
+                    <textarea class="form-control" name="description" id="offerDescription"
+                              placeholder="Enter offer description" maxlength="2000" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -75,10 +81,18 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="{% static 'js/forms/offer/script.js' %}"></script>
 
-<!-- Animations -->
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-        type="module"></script>
+<!-- Toggle between forms -->
+<script>
+    document.getElementById('signInBtn').addEventListener('click', function() {
+        document.getElementById('signUpForm').style.display = 'none';
+        document.getElementById('signInForm').style.display = 'block';
+    });
+    document.getElementById('signUpBtn').addEventListener('click', function() {
+        document.getElementById('signInForm').style.display = 'none';
+        document.getElementById('signUpForm').style.display = 'block';
+    });
+</script>
 </body>
+
 </html>

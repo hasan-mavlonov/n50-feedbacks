@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.hashers import make_password
-from .models import StudentModel
+from .models import ProblemsModel, OffersModel, StudentModel
 
 
 class StudentRegistrationForm(forms.ModelForm):
@@ -47,3 +47,13 @@ class StudentProfileForm(forms.ModelForm):
             'linkedin_profile': forms.URLInput(attrs={'placeholder': 'Enter your LinkedIn profile link'}),
             'profile_picture': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
         }
+
+class ProblemForm(forms.ModelForm):
+    class Meta:
+        model = ProblemsModel
+        fields = ['title', 'description']
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model = OffersModel
+        fields = ['title', 'description']

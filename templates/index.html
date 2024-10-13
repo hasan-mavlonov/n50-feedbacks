@@ -67,12 +67,13 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'problems' %}">Problems & offers</a>
-                    </li>
+    <a class="nav-link" href="{% if request.session.user_id %}{% url 'problems&offers' %}{% else %}{% url 'login' %}{% endif %}">Problems & offers</a>
+</li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'offers' %}">Make an offer</a>
-                    </li>
+<li class="nav-item">
+    <a class="nav-link" href="{% if request.session.user_id %}{% url 'submit_offer' %}{% else %}{% url 'login' %}{% endif %}">Make an offer</a>
+</li>
+
 
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'comments' %}">Comments</a>
@@ -131,9 +132,10 @@
 
                     <h1 class="text-white mb-4">{% trans 'Online platform for requests and offers' %}</h1>
 
-                    <a href="{% url 'problems' %}" class="btn custom-btn smoothscroll me-3">Problems & offers</a>
+                    <a href="{% if request.session.user_id %}{% url 'problems&offers' %}{% else %}{% url 'login' %}{% endif %}" class="btn custom-btn smoothscroll me-3">Problems & offers</a>
 
-                    <a href="{% url 'offers' %}" class="link link--kale smoothscroll">Make an offer</a>
+<a href="{% if request.session.user_id %}{% url 'submit_offer' %}{% else %}{% url 'login' %}{% endif %}" class="link link--kale smoothscroll">Make an offer</a>
+
                 </div>
                 <div class="hero-image-wrap col-lg-6 col-12 mt-3 mt-lg-0">
                     <dotlottie-player src="https://lottie.host/ef67cee9-3f8a-4da2-945f-ab8a83e541b0/QZXEjRpNmf.json"

@@ -16,6 +16,7 @@ class StudentModel(models.Model):
     linkedin_profile = models.URLField(max_length=200, null=True, blank=True, verbose_name=_('LinkedIn Profile Link'))
     profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True,
                                         verbose_name=_('Profile Picture'))
+
     @property
     def full_name(self):
         # Combine first and last names for full name
@@ -42,3 +43,23 @@ class FeedbackModel(models.Model):
         verbose_name_plural = _('Feedback')
 
 
+class OffersModel(models.Model):
+    title = models.CharField(max_length=100, null=True, verbose_name=_('Title'))
+    description = models.TextField(null=True, verbose_name=_('Description'))
+    user = models.ForeignKey(StudentModel, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+
+class ProblemsModel(models.Model):
+    title = models.CharField(max_length=100, null=True, verbose_name=_('Title'))
+    description = models.TextField(null=True, verbose_name=_('Description'))
+    user = models.ForeignKey(StudentModel, on_delete=models.CASCADE)
+    likes = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title
